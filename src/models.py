@@ -33,6 +33,7 @@ class TableSchema(Conn):
     namespace = Conn.host
     ALLOWABLE_OPERATORS = ['=', '<', '>', '<>']
     ALLOWABLE_METHODS = ['DELETE', 'SELECT', 'UPDATE']
+    TABLE_NAME = ''
 
 
     def __init__(self):
@@ -42,7 +43,7 @@ class TableSchema(Conn):
 
     @property
     def table(self):
-        return self.__class__.__name__
+        return self.TABLE_NAME
 
 
     @property
@@ -119,17 +120,23 @@ class TableSchema(Conn):
 
 
     def query(self, method:str='SELECT'):
-        self.method(method.upper())
-        QueryValidator().validator(self.command)
-        print(self)
+        self.finalize_command(method)
         return self.execute(self.command)
 
 
     def to_df(self, method:str='SELECT'):
-        self.method(method.upper())
+        self.finalize_command(method)
         conn = pyodbc.connect(Conn.connection_string)
         return pd.read_sql(self.command, conn)
-        
+
+       
+    def finalize_command(self, method):
+        self.method(method.upper())
+        if 'COLS' in self.command:
+            self.command = self.command.replace('COLS', '*')
+        QueryValidator().validator(self.command)
+        return self
+
 
     def __str__(self):
         return self.command
