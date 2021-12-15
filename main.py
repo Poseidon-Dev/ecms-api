@@ -1,14 +1,4 @@
-from src.conn import Conn
-from src.models import TableSchema
-from src.hr import Property, Master
+from src import HR
 
-hr = Property()
-
-hr.columns(['HRTEMPID', 'propertyno', 'description', 'controlno'])
-
-hr.filters(propertyno=9,)
-data = hr.to_df()
-print(data)
-
-
-
+hr = HR.Master()
+data = hr.filter('employeeno', 18000, '>').to_excel()

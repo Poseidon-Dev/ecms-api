@@ -1,1 +1,1 @@
-from src.hr.models import *
+from src.HR.models import *

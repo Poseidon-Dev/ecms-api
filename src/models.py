@@ -129,6 +129,10 @@ class TableSchema(Conn):
         conn = pyodbc.connect(Conn.connection_string)
         return pd.read_sql(self.command, conn)
 
+    
+    def to_excel(self, method:str='SELECT', name='dumps\export.xlsx', index=False, header=True):
+        self.to_df().to_excel(name, index=index, header=header)
+
        
     def finalize_command(self, method):
         self.method(method.upper())
