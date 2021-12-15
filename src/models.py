@@ -30,16 +30,29 @@ class QueryValidator:
 
 class TableSchema(Conn):
 
-    namespace = 'CMSFIL'
+    namespace = Conn.host
     ALLOWABLE_OPERATORS = ['=', '<', '>', '<>']
     ALLOWABLE_METHODS = ['DELETE', 'SELECT', 'UPDATE']
 
+
     def __init__(self):
-        self.table = self.__class__.__name__
-        self.id = f'{self.table}ID'
-        self.cols = [{k:v} for k,v in self.__class__.__dict__.items() if '__' not in k]
         self.command = f'METHOD COLS FROM {self.namespace}.{self.table} '
         super().__init__()
+
+
+    @property
+    def table(self):
+        return self.__class__.__name__
+
+
+    @property
+    def id (self):
+        return f'{self.table}ID'
+
+
+    @property
+    def cols(self):
+        return [{k:v} for k,v in self.__class__.__dict__.items() if '__' not in k]
 
 
     @property
@@ -117,7 +130,7 @@ class TableSchema(Conn):
         conn = pyodbc.connect(Conn.connection_string)
         return pd.read_sql(self.command, conn)
         
-        
+
     def __str__(self):
         return self.command
 
