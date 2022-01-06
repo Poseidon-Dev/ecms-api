@@ -1,11 +1,9 @@
-from pandas.io.pytables import Table
-from src.models import TableSchema
-from src.conn import Conn
+from src.EcmsApi.tables import TableMixin
 
-__all__ = ['Master', 'Property' ]
+__all__ = ['HRTEMP']
 
 
-class Master(TableSchema):
+class HRTEMP(TableMixin):
 
     TABLE_NAME = 'HRTEMP'
 
@@ -93,32 +91,3 @@ class Master(TableSchema):
     PRTECLID = ('INT', 18)
     EMPLCLASS = ('DEC', 3)
     EMPLTYPE = ('CHAR', 2)
-
-
-class Property(TableSchema):
-
-    TABLE_NAME = 'HRTCPR'
-
-    HRTCPRID = ('INT', 18)
-    STATUSCODE = ('CHAR' , )
-    SRCCNCID = ('INT', 18)
-    COMPANYNO = ('DEC' , 2)
-    DIVISIONNO = ('DEC' , 3)
-    HRTEMPID = ('INT', 18)
-    CONTROLNO = ('CHAR', )
-    PROPERTYNO = ('DEC' , 3)
-    DESCRIPTION = ('CHAR', 50)
-    ASGDATE = ('DATE' , )
-    RTNDATE = ('DATE' , )
-    EXPDATE = ('DATE' , )
-    DUEDATE = ('DATE' , )
-    RETIREDDATE = ('DATE' , )
-    APTVENID = ('INT', 18)
-    VENDODRNO = ('DEC' , 5)
-    PROPAMOUNT = ('INT' , 9)
-    RETURNEDTO = ('CHAR', 20)
-    ADDEDBY = ('CHAR', 20)
-    ADDDATE = ('TIMESTAMP',)
-    UPDPGM = ('CHAR', 20)
-    UPDATEDBY = ('CHAR', 20)
-    UPDDATE = ('TIMESTAMP', )

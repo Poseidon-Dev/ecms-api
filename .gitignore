@@ -29,3 +29,10 @@ dumps/
 wadsworth.log
 
 run.bat
+
+*.xlsx
+*/.xlsx
+
+
+.pypirc
+*/.pypirc

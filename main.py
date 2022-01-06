@@ -1,4 +1,7 @@
-from src import HR
+from src.EcmsApi.queries import SQLQuery
+from src.EcmsApi.HR import HRTEMP
 
-hr = HR.Master()
-data = hr.filter('employeeno', 18000, '>').to_excel()
+q = SQLQuery(HRTEMP).select()
+
+print(q.filters(employeeno=12799).to_excel('somenewfilename'))
+
