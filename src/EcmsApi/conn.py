@@ -23,10 +23,8 @@ class Conn:
             cur.execute(command)
             if 'SELECT' in command:
                 resp = cur.fetchall()
-                print(command)
                 return list(resp)
             if 'UPDATE' in command:
-                print(command)
-                # conn.commit()
+                conn.commit()
         except Exception as e:
             print(e)

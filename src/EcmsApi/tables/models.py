@@ -1,4 +1,4 @@
-from src.EcmsApi.tables import TableMixin
+from src.EcmsApi.tables._base import TableMixin
 
 __all__ = ['HRTEMP']
 
