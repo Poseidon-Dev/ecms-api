@@ -13,10 +13,20 @@ Select
 table = SQLQuery(HRTEMP)
 query = table.select()
 
-query.filter(employeeno=12345, companyno=50, divisionno=2)
-query.columns(['CompanyNo', 'DivisionNo', 'EmployeeNo', 'Department'])
+query.filters(employeeno=12345, companyno=50, divisionno=2)
+query.columns(['CompanyNo', 'DivisionNo', 'EmployeeNo', 'City'])
+query.order(by='City')
+query.head()
 
 response = query.query()
+
+```
+
+Returns the command and corresponding values:
+```sql
+SELECT
+COMPANYNO, DIVISIONNO, EMPLOYEENO, CITY FROM CMSFIL.HRTEMP
+WHERE EMPLOYEENO = '12345' AND COMPANYNO = '50' AND DIVISIONNO = '2' ORDER BY City ASC LIMIT 10
 ```
 
 The select method also allows for queried data to be saved as an excel doc using .to_excel() rather than .query()
@@ -27,9 +37,15 @@ Update
 table = SQLQuery(HRTEMP)
 query = table.update()
 
-query.sets(departmentno=41, companyno=50)
-query.filter(employeeno=12345)
+query.sets(City='SomeCity', companyno=50)
+query.filters(employeeno=12345)
 query.query()
+```
+Will execute the following:
+```sql
+UPDATE
+CMSFIL.HRTEMP
+SET CITY = 'SomeCity' , COMPANYNO = '50' WHERE EMPLOYEENO = '12345'
 ```
 
 ## Support

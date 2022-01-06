@@ -57,10 +57,10 @@ class QueryMixin:
         columns available within the table
         """
         for col in columns:
-            if col.upper() not in self.column_names:
+            if col.upper() not in self.table.column_names:
                 raise ValueError(f'{col} is not a column in {self.table}')
         self.columns = columns
-        columns = ', '.join(columns)
+        columns = ', '.join(columns).upper()
         self.command = self.command.replace('COLS', columns)
 
     def finalize_command(self):

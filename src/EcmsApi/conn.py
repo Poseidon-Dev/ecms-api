@@ -23,6 +23,7 @@ class Conn:
             cur.execute(command)
             if 'SELECT' in command:
                 resp = cur.fetchall()
+                print(command)
                 return list(resp)
             if 'UPDATE' in command:
                 print(command)
