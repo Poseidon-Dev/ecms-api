@@ -1,1 +1,1 @@
-from src.EcmsApi.tables.models import *
+from .models import *

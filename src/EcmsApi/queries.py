@@ -1,6 +1,6 @@
 import pandas as pd
 import pyodbc
-from src.EcmsApi.conn import Conn
+from src.ecmsapi.conn import Conn
 
 __all__ = ['SQLQuery', ]
 
