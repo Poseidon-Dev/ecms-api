@@ -2,16 +2,15 @@ from distutils.core import setup
 
 
 setup(
-    name='ecmsapi',
-    # package_dir='src',
+    name='ecms-api',
     # packages=['ecmsapi'],
-    version='0.1.4',
+    version='0.1.7',
     license='MIT',
     description='A python integration to allow for quickly sending queries directly to the as400',
     author='Johnny Whitworth',
     author_email='jwhitworth@arizonapipeline.com',
     url='https://github.com/Poseidon-Dev/ecms-api',
-    download_url='https://github.com/Poseidon-Dev/ecms-api/archive/refs/tags/v_0.1.1.zip',
+    download_url='https://github.com/Poseidon-Dev/ecms-api/archive/refs/tags/v_0.1.4.zip',
     keywords=['ecms', 'cgc'],
     requires=[
         'pandas',
