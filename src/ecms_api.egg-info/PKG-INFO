@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: ecms-api
+Version: 0.2.1
+Summary: A python integration to allow for quickly sending queries directly to the as400
+Home-page: UNKNOWN
+Author: Johnny Whitworth
+Author-email: jwhitworth@arizonapipeline.com
+License: UNKNOWN
+Project-URL: ecms_api, https://github.com/Poseidon-Dev/ecms-api
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Other Audience
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Operating System :: Microsoft :: Windows
+Requires-Python: >=3.1
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+UNKNOWN
+
