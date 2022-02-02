@@ -20,8 +20,6 @@ class Conn:
         try:
             conn = pyodbc.connect(self.connection_string)
             cur = conn.cursor()
-            print(command)
-
             cur.execute(command)
             if 'SELECT' in command:
                 resp = cur.fetchall()
@@ -29,7 +27,6 @@ class Conn:
             if 'UPDATE' in command:
                 conn.commit()
             if 'INSERT' in command:
-                return True
                 conn.commit()
         except Exception as e:
             print(e)
