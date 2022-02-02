@@ -1,6 +1,8 @@
 from ._base import TableMixin
 
-__all__ = ['HRTEMP']
+__all__ = ['HRTEMP', 'HRTCPR']
+
+import datetime
 
 
 class HRTEMP(TableMixin):
@@ -91,3 +93,48 @@ class HRTEMP(TableMixin):
     PRTECLID = ('INT', 18)
     EMPLCLASS = ('DEC', 3)
     EMPLTYPE = ('CHAR', 2)
+
+
+class HRTCPR(TableMixin):
+
+    TABLE_NAME = 'HRTCPR'
+    
+    HRTCPRID = ('INT', 18)
+    STATUSCODE = ('CHAR', 1)
+    SRCCNCID = ('INT', 18)
+    COMPANYNO = ('INT', 2)
+    DIVISIONNO = ('INT', 3)
+    HRTEMPID = ('INT', 18)
+    CONTROLNO = ('INT', 20)
+    PROPERTYNO = ('INT', 3)
+    DESCRIPTION = ('CHAR', 50)
+    ASGDATE = ('DATE',)
+    RTNDATE = ('DATE',)
+    EXPDATE = ('DATE',)
+    DUEDATE = ('DATE',)
+    RETIREDDATE = ('DATE',)
+    APTVENID = ('INT', 18)
+    VENDORNO = ('INT', 5)
+    PROPAMOUNT = ('INT', 9)
+    RETURNEDTO = ('CHAR', 20)
+    ADDEDBY = ('CHAR', 20)
+    ADDEDDATE = ('TIMESTAMP', 26)
+    UPDPGM = ('CHAR', 20)
+    UPDATEDBY = ('CHAR', 20)
+    UPDDATE = ('TIMESTAMP', 26)
+
+    DEFAULTS = [
+            ('STATUSCODE', 'A' ),
+            ('SRCCNCID', '5'),
+            ('COMPANYNO', '1'),
+            ('DIVISIONNO', '0'),
+            ('ASGDATE', datetime.date.today()),
+            ('UPDPGM', 'HRTP130'),
+            ('UPDATEDBY', 'CGCOWNER'),
+        ]
+
+    FORIEGN_KEYS = [
+        {'EMPLOYEENO': {'table': HRTEMP, 'ref': 'HRTEMPID' }},
+    ]
+
+

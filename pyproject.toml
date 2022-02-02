@@ -4,5 +4,6 @@ requires = [
     "wheel",
     "pandas",
     "pyodbc",
+    "openpyxl",
 ]
 build-backend = "setuptools.build_meta"

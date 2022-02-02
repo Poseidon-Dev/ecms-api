@@ -8,6 +8,7 @@ class TableMixin:
     Table Mixin class to get quick properties from the table
     """
     NAMESPACE = os.getenv('ECMS_HOST')
+    FORIEGN_KEYS = {}
 
     def __init__(self):
         self.TABLE = self.__class__

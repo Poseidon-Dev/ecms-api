@@ -39,3 +39,6 @@ run.bat
 
 dist/
 dist/*
+
+*/ecms_api.egg-info
+

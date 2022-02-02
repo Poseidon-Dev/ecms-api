@@ -1,6 +1,7 @@
+from calendar import c
 import pandas as pd
 import pyodbc
-from src.ecmsapi.conn import Conn
+from .conn import Conn
 
 __all__ = ['SQLQuery', ]
 
@@ -16,7 +17,28 @@ class QueryMixin:
         {self.__class__.__name__.upper()} 
         COLS FROM {self.table.namespace}.{self.table.TABLE_NAME} 
         """
+        if table.FORIEGN_KEYS:
+            self.foriegn_keys = table.FORIEGN_KEYS
+        else:
+            self.foriegn_keys = {}
         super().__init__()
+
+    def f_keys(self, column, value):
+        """
+        Checks to see if the Table has any foriegn keys and converts
+        the provided column, value to that of the Parent table
+        """
+        if self.foriegn_keys:
+            for f_key in self.foriegn_keys:
+                if column.upper() in f_key.keys():
+                    for col, ref in f_key.items():
+                        query = SQLQuery(ref['table']).select().filter(col, value).to_df()
+                        return {
+                            'value': query[ref['ref']].head(1).item(),
+                            'column' : ref['ref']}
+        else:
+            return None
+
 
     def filter(self, column: str, value, op: str = "="):
         """
@@ -26,8 +48,14 @@ class QueryMixin:
 
         Base method for filters
 
-        Column must be a column found witin the table        
+        Column must be a column found witin the table or listed as 
+        a Foreign key on the table    
         """
+        f_keys = self.f_keys(column, value)
+        if f_keys:
+            column = f_keys['column']
+            value = f_keys['value']
+        
         if column.upper() in self.table.column_names:
             if op in self.ALLOWABLE_OPERATORS:
                 if 'WHERE' not in self.command:
@@ -85,6 +113,7 @@ class Select(QueryMixin):
 
     def __init__(self, table):
         super().__init__(table)
+        
 
     def all(self):
         """
@@ -124,6 +153,8 @@ class Select(QueryMixin):
         """
         if 'COLS' in self.command:
             self.command = self.command.replace('COLS', '*')
+        print(self.command)
+        
 
     def to_df(self):
         """
@@ -181,9 +212,72 @@ class Update(QueryMixin):
         if 'WHERE' not in self.command:
             raise SyntaxError('Filter need to prevent query overload')
 
-
 class Insert(QueryMixin):
-    pass
+    def __init__(self, table):
+        super().__init__(table)
+        self.command += '(COLS) VALUES (VALS) ' 
+        self.insert_cols = []
+        self.insert_vals = []
+        if table().DEFAULTS:
+            self.insert_defaults(table().DEFAULTS)
+            
+    def insert_defaults(self, defaults):
+        """
+        Inserts default column values into the query if not 
+        specified 
+        """
+        for default in defaults:
+            self.insert_cols.append(f'"{default[0]}"')
+            self.insert_vals.append(f"'{default[1]}'")
+
+    def insert(self, column: str, value):
+        """
+        Accepts a column and value to add to the command
+        Base method for insert
+
+        Column must be a column found witin the table or
+        listed as a foreign key       
+        """
+        f_keys = self.f_keys(column, value)
+        if f_keys:
+            column = f_keys['column']
+            value = f_keys['value']
+
+        if column.upper() in self.table.column_names:
+            self.insert_cols.append(f'"{column.upper()}"')
+            self.insert_vals.append(f"'{value}'")
+        else:
+            raise ValueError(
+                f'{column.upper()} is not a column in {self.table}')
+
+    def inserts(self, **kwargs):
+        """
+        Accepts kwargs as column, value pairs to be used in 
+        self.insert method
+        """
+        for col, val in kwargs.items():
+            self.insert(col, val)
+        return self
+
+
+    def finalize_command(self):
+        """
+        Makes sure that COLS and FROM are not present in the query
+        Makes sure that a SET method was called
+        Makes sure that a filter was placed on the query
+        """
+        
+        if 'COLS' in self.command:
+            self.command = self.command.replace('COLS ', '')
+        if 'FROM' in self.command:
+            self.command = self.command.replace('FROM ', 'INTO ')
+        if 'INSERT' not in self.command:
+            raise SyntaxError('INSERT missing from query')
+        if 'WHERE' in self.command:
+            raise SyntaxError('Incorrect syntax, please remove filters')
+
+        self.command = self.command.replace('COLS', ', '.join(self.insert_cols))
+        self.command = self.command.replace('VALS', ', '.join(self.insert_vals))
 
 
 class Delete(QueryMixin):
