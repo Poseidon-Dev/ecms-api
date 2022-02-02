@@ -7,6 +7,13 @@ ECMS-API is a query wrapper that allows for querying the AS400 directly
 **[Johnny Whitworth (@Poseidon-dev)](https://github.com/poseidon-dev)** 
 
 ## How to use Examples
+SQLQuery is a class factory that takes in a table object. The methods in SQLQuery (select, update, insert)
+return a class type of the same name with the table being passed as a paramter. 
+
+It should be noted that the tables themselves are objects, and not strings. 
+
+Tables can be found in ecmsapi
+
 
 Select
 ```python
@@ -46,6 +53,22 @@ Will execute the following:
 UPDATE
 CMSFIL.HRTEMP
 SET CITY = 'SomeCity' , COMPANYNO = '50' WHERE EMPLOYEENO = '12345'
+```
+
+Insert
+```python
+table = SQLQuery(HRTCPR)
+query = table.update()
+
+query.sets(City='SomeCity', companyno=50)
+query.filters(employeeno=12345)
+query.query()
+```
+Will execute the following:
+```sql
+INSERT INTO
+CMSFIL.HRTEMP
+("CITY", "COMPANYNO") VALUES ('SomeCity', '50')
 ```
 
 ## Support
