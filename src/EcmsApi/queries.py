@@ -23,6 +23,8 @@ class QueryMixin:
             self.foriegn_keys = {}
         super().__init__()
 
+
+    #TODO make it so this can handle multiple fkeys
     def f_keys(self, column, value):
         """
         Checks to see if the Table has any foriegn keys and converts

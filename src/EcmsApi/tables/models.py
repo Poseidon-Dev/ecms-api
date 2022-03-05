@@ -1,6 +1,6 @@
 from ._base import TableMixin
 
-__all__ = ['HRTEMP', 'HRTCPR']
+__all__ = ['HRTEMP', 'HRTCPR', 'PRTMST']
 
 import datetime
 
@@ -134,7 +134,115 @@ class HRTCPR(TableMixin):
         ]
 
     FORIEGN_KEYS = [
-        {'EMPLOYEENO': {'table': HRTEMP, 'ref': 'HRTEMPID' }},
+        {
+            'EMPLOYEENO': {'table': HRTEMP, 'ref': 'HRTEMPID' },
+            'OCCUPDESC': {'table': HRTEMP, 'ref': 'OCCUPDESC1'}
+        },
     ]
 
+
+class PRTMST(TableMixin):
+
+    TABLE_NAME = 'PRTMST'
+
+    PRTMSTID = ('INT', 18)
+    STATUSCODE = ('CHAR', 18)
+    SRCCNCIDCOMPANYNO = ('INT', 18)
+    COMPANYNO = ('DEC', 2)
+    DIVISIONNO = ('DEC', 3)
+    DSTCNCID = ('CHAR', 18)
+    DISTCOMPANY = ('DEC', 2)
+    DISTDIVISION = ('DEC', 3)
+    CSHCNCID = ('INT', 18)
+    CSHCOMPANY = ('DEC', 2)
+    CSHDIVISION = ('DEC', 3)
+    EMPLOYEENO = ('INT', 9)
+    EMPNAME = ('CHAR', 18)
+    ABBRV = ('CHAR', 18)
+    ADDR1 = ('CHAR', 18)
+    ADDR2 = ('CHAR', 18)
+    ADDR3 = ('CHAR', 18)
+    CITY = ('CHAR', 18)
+    STATECODE = ('CHAR', 18)
+    ZIPCODE = ('CHAR', 18)
+    COUNTRYCODE = ('CHAR', 18)
+    SYTCCDID = ('INT', 18)
+    AREACODE = ('DEC', 18)
+    PHONENO = ('DEC', 18)
+    CELLPHAC = ('DEC', 18)
+    CELLPHNO = ('DEC', 18)
+    PAGERAC = ('DEC', 18)
+    PAGERNO = ('DEC', 18)
+    SOCIALSECNO = ('DEC', 18)
+    MARITALSTAT = ('CHAR', 1) #TODO: Finish building class
+    OCCUPDESC1 = ('CHAR', 18)
+    OCCUPDESC2 = ('CHAR', 18)
+    EXEMPTCERTPR = ('CHAR', 18)
+    LVLCODE = ('CHAR', 18)
+    OFFICERSCODE = ('CHAR', 18)
+    SEXCODE = ('CHAR', 18)
+    PRTEEIOD = ('CHAR', 18)
+    MINOTIRYCODE = ('CHAR', 18)
+    BNKMSTID = ('CHAR', 18)
+    GLBNKACCT = ('CHAR', 18)
+    PAYFREQCDE = ('CHAR', 18)
+    PAYTYPE = ('CHAR', 18)
+    FEDEXEMPCODE = ('CHAR', 18)
+    EXMPTFMSTATE = ('CHAR', 18)
+    DECEASEDCODE = ('CHAR', 18)
+    PENSIONCODE = ('CHAR', 18)
+    PRTUNMID = ('CHAR', 18)
+    UNIONNO = ('CHAR', 18)
+    BIRTHDATE = ('CHAR', 18)
+    ORIGHIREDATE = ('CHAR', 18)
+    ADJHIREDATE = ('CHAR', 18)
+    BEGININGDATE = ('CHAR', 18)
+    LASTWKDATE = ('CHAR', 18)
+    TERMDATE = ('CHAR', 18)
+    TERMCODE = ('CHAR', 18)
+    TERMRSN = ('CHAR', 18)
+    ELGBHIRE = ('CHAR', 18)
+    HOMESTATE = ('CHAR', 18)
+    WCSTATE = ('CHAR', 18)
+    PRTSTMID = ('CHAR', 18)
+    STIDCODE = ('CHAR', 18)
+    FICACODE = ('CHAR', 18)
+    FUTACODE = ('CHAR', 18)
+    PRTLCMID = ('CHAR', 18)
+    LOCALCODE = ('CHAR', 18)
+    EXFITAMT = ('CHAR', 18)
+    EXFITPCT = ('CHAR', 18)
+    OPTTAXCODE = ('CHAR', 18)
+    TAXCRCODE = ('CHAR', 18)
+    TAXSTATUS = ('CHAR', 18)
+    EICSTATUS = ('CHAR', 18)
+    FEDDEDAMT = ('CHAR', 18)
+    EMPLTIPS = ('CHAR', 18)
+    SDIPAYPERCDE = ('CHAR', 18)
+    WYNAICSCDE = ('CHAR', 18)
+    WYWCCOVERAGE = ('CHAR', 18)
+    DEDUCTIONCDE = ('CHAR', 18)
+    STDDEPNO = ('CHAR', 18)
+    SHIFTNO = ('CHAR', 18)
+    PRTECLID = ('CHAR', 18)
+    EMPCLASS = ('CHAR', 18)
+    EMPTYPE = ('CHAR', 18)
+    EMPLGROUP = ('CHAR', 18)
+    PRTCRWID = ('CHAR', 18)
+    CREWGROUP = ('CHAR', 18)
+    CREWNO = ('CHAR', 18)
+    JCTMSTID = ('CHAR', 18)
+    JOBNO = ('CHAR', 18)
+    SUBJOB = ('CHAR', 18)
+    COSTCODE = ('CHAR', 18)
+    COSTTYPE = ('CHAR', 18)
+    STDHOURS = ('CHAR', 18)
+    STDCOSTCODE = ('CHAR', 18)
+    TICKETNO = ('CHAR', 18)
+    FIRSTEMPNAME = ('CHAR', 18)
+    MIDDLENAME1 = ('CHAR', 18)
+    MIDDLENAME2 = ('CHAR', 18)
+    LASTEMPNAME = ('CHAR', 18)
+    SUFFIX = ('CHAR', 18)
+    SUPERVISOR1 = ('CHAR', 18)
 
