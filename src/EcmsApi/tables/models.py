@@ -1,6 +1,6 @@
 from ._base import TableMixin
 
-__all__ = ['HRTEMP', 'HRTCPR', 'PRTMST']
+__all__ = ['HRTEMP', 'HRTCPR', 'PRTMST', 'PRTECN']
 
 import datetime
 
@@ -245,4 +245,24 @@ class PRTMST(TableMixin):
     LASTEMPNAME = ('CHAR', 18)
     SUFFIX = ('CHAR', 18)
     SUPERVISOR1 = ('CHAR', 18)
+
+class PRTECN(TableMixin):
+
+    TABLE_NAME = 'PRTECN'
+
+    PRTECNID = ('INT', 18)
+    PRTMSTID = ('INT', 18)
+    STATUSCODE = ('CHAR', 1)
+    COMPANYNO = ('DEC', 2)
+    DIVISIONNO = ('DEC', 3)
+    EMPLOYEENO = ('INT', 9)
+    SEQNO = ('DEC', 2)
+    CONTNAME = ('CHAR', 30)
+    CELLPHAC = ('DEC', 3)
+    CELLPHNO = ('DEC', 7)
+    FAXAC = ('DEC', 3)
+    FAXPHNO = ('DEC', 7)
+    OTHAC = ('DEC', 3)
+    OTHPHNO = ('DEC', 7)
+    EMAILADDR = ('CHAR', 64)
 

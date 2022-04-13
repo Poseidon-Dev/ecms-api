@@ -3,7 +3,7 @@ import pandas as pd
 import pyodbc
 from .conn import Conn
 
-__all__ = ['SQLQuery', ]
+__all__ = ['SQLQuery', 'QueryMixin' ]
 
 
 class QueryMixin:
