@@ -1,4 +1,5 @@
 from calendar import c
+from msilib import Table
 import pandas as pd
 import pyodbc
 from .conn import Conn
@@ -40,7 +41,6 @@ class QueryMixin:
                             'column' : ref['ref']}
         else:
             return None
-
 
     def filter(self, column: str, value, op: str = "="):
         """
@@ -132,6 +132,32 @@ class Select(QueryMixin):
             by = self.id
         self.command += f'ORDER BY {by} {order} '
         return self
+
+    def join(self, f_key, table:Table, on=None):
+        if not on:
+            on = f_key
+        self.command += f'''
+        JOIN {self.table.namespace}.{table.TABLE_NAME}
+        ON '{table.TABLE_NAME}.{f_key.upper()}' = '{self.table.TABLE_NAME}.{on.upper()}'
+        '''
+        return self
+
+    def join_fkeys(self, c1=None, c2=None, join_type='JOIN'):
+        if self.foriegn_keys:
+            if c1 and not c2:
+                c2 = c1
+            for f_key in self.foriegn_keys:
+                print(f_key)
+                for col, ref in f_key.items():
+                    self.command += f'''
+                    {join_type} {self.table.namespace}.{ref["table"].TABLE_NAME} 
+                    ON {self.table.TABLE_NAME}.{col} = {ref["table"].TABLE_NAME}.{ref["ref"]} '''
+                    if c1:
+                        self.command += f'''
+                        AND {self.table.TABLE_NAME}.{c1.upper()} = {ref["table"].TABLE_NAME}.{c2.upper()}
+                        '''    
+        return self                 
+
 
     def limit(self, amount=1):
         """

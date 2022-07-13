@@ -1,6 +1,7 @@
+from distutils.command.install_lib import PYTHON_SOURCE_EXTENSION
 from ._base import TableMixin
 
-__all__ = ['HRTEMP', 'HRTCPR', 'PRTMST', 'PRTECN']
+__all__ = ['HRTEMP', 'HRTCPR', 'PRTMST', 'PRTECN', 'APTCHK', 'APTVEN']
 
 import datetime
 
@@ -265,4 +266,36 @@ class PRTECN(TableMixin):
     OTHAC = ('DEC', 3)
     OTHPHNO = ('DEC', 7)
     EMAILADDR = ('CHAR', 64)
+
+class APTVEN(TableMixin):
+
+    TABLE_NAME = 'APTVEN'
+
+    STATUSCODE = ('CHAR', 1)
+    COMPANYNUMBER = ('DEC', 2)
+    DIVISIONNUMBER = ('DEC', 3)
+    VENDORNUMBER = ('DEC', 5)
+    NAME25 = ('CHAR', 25)
+
+class APTCHK(TableMixin):
+
+    TABLE_NAME = 'APTCHK'
+
+    STATUSCODE = ('CHAR', 1)
+    COMPANYNUMBER = ('DEC', 2)
+    DIVISIONNUMBER = ('DEC', 3)
+    VENDORNUMBER = ('DEC', 5)
+    GENLEDGERACCT = ('DEC', 15)
+    CHECKNUMBER = ('DEC', 6)
+    VENDORNUMBER = ('DEC', 5)
+    CHECKAMT = ('DEC', 11)
+    CHECKDATE = ('DEC', 8)
+
+    FORIEGN_KEYS = [
+        {
+            'VENDORNUMBER': {'table': APTVEN, 'ref': 'VENDORNUMBER' },
+        },
+    ]
+
+
 
